@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebBrutalHero — HERO-SMS ULTRA BRUTAL</title>
+    <title>WebBrutalHero — HERO-SMS SPECIALIST</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -28,7 +28,7 @@
             min-height: 100vh;
         }
 
-        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
 
         header {
             display: flex;
@@ -53,7 +53,7 @@
             cursor: pointer;
         }
         .balance-card span { color: var(--success); font-weight: 800; font-family: 'JetBrains Mono', monospace; font-size: 18px; }
-        .refresh-btn { font-size: 20px; transition: 0.3s; }
+        .refresh-btn { font-size: 22px; transition: 0.3s; color: var(--accent); }
         .refresh-btn:hover { transform: rotate(180deg); }
 
         .api-section {
@@ -65,16 +65,17 @@
             display: flex;
             gap: 12px;
         }
-        input {
-            flex: 1;
+        input, select {
             background: #000;
             border: 1px solid var(--border);
-            padding: 14px 20px;
+            padding: 14px 18px;
             border-radius: 12px;
             color: #fff;
             outline: none;
             font-family: 'JetBrains Mono', monospace;
+            width: 100%;
         }
+        input:focus { border-color: var(--accent); }
         
         .btn {
             padding: 14px 20px;
@@ -84,77 +85,72 @@
             font-weight: 800;
             transition: 0.3s;
             text-transform: uppercase;
+            width: 100%;
         }
         .btn-primary { background: var(--accent); color: #000; }
         .btn-stop { background: var(--danger); color: #fff; }
 
-        .main-grid { display: grid; grid-template-columns: 320px 1fr; gap: 25px; }
+        .main-grid { display: grid; grid-template-columns: 340px 1fr; gap: 25px; }
 
-        .card {
-            background: var(--panel);
-            padding: 20px;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            margin-bottom: 20px;
-        }
+        .card { background: var(--panel); padding: 20px; border-radius: 20px; border: 1px solid var(--border); margin-bottom: 20px; }
 
-        select {
-            width: 100%;
-            background: #000;
-            border: 1px solid var(--border);
-            padding: 12px;
-            border-radius: 10px;
-            color: #fff;
-            margin-bottom: 15px;
-            outline: none;
-        }
-
-        .stats-box { padding: 15px; background: #000; border-radius: 12px; font-size: 14px; }
+        .stats-box { padding: 15px; background: #000; border-radius: 12px; font-size: 13px; margin-top: 15px; }
         .stats-box p { display: flex; justify-content: space-between; margin-bottom: 8px; }
         .stats-box span { color: var(--accent); font-weight: 800; }
 
-        .orders-container { display: flex; flex-direction: column; gap: 12px; max-height: 80vh; overflow-y: auto; width: 100%; }
-
+        /* VERTICAL LIST - ANTI MENYAMPING */
+        .orders-container { display: flex; flex-direction: column; gap: 15px; max-height: 80vh; overflow-y: auto; width: 100%; padding-right: 10px; }
         .order-item {
-            background: var(--panel); width: 100%; padding: 18px 25px; border-radius: 16px; border: 1px solid var(--border);
-            display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--accent);
-            animation: slideIn 0.3s ease-out;
+            background: var(--panel);
+            width: 100%; 
+            padding: 20px 25px;
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 6px solid var(--accent);
+            animation: slideIn 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
         }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .order-num { font-size: 22px; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: #fff; cursor: pointer; letter-spacing: 1px; }
-        .order-meta { font-size: 12px; color: var(--text-dim); }
-        .timer-val { color: var(--gold); font-size: 13px; font-weight: 600; }
+        .order-info { display: flex; flex-direction: column; gap: 5px; }
+        .order-num { font-size: 24px; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: #fff; cursor: pointer; letter-spacing: 1px; }
+        .order-meta { font-size: 13px; color: var(--text-dim); display: flex; align-items: center; gap: 10px; }
+        .timer-val { color: var(--gold); font-weight: 800; background: rgba(255,204,0,0.1); padding: 2px 8px; border-radius: 5px; }
 
-        .order-status { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+        .order-status { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
 
         .otp-badge {
-            background: var(--success); color: #000; padding: 8px 20px; border-radius: 10px; font-weight: 900;
-            font-family: 'JetBrains Mono', monospace; font-size: 24px; box-shadow: 0 0 15px var(--success); cursor: pointer;
+            background: var(--success); color: #000; padding: 10px 25px; border-radius: 12px;
+            font-weight: 950; font-family: 'JetBrains Mono', monospace; font-size: 26px;
+            box-shadow: 0 0 20px var(--success); cursor: pointer; animation: flash 1s infinite alternate;
         }
+        @keyframes flash { from { opacity: 1; } to { opacity: 0.7; } }
 
         .btn-cancel {
             background: rgba(255, 77, 77, 0.1); color: var(--danger); border: 1px solid var(--danger);
-            padding: 6px 14px; font-size: 11px; border-radius: 8px; font-weight: 700; cursor: pointer;
+            padding: 8px 16px; font-size: 12px; border-radius: 10px; font-weight: 800; cursor: pointer;
         }
-        .btn-cancel:disabled { opacity: 0.3; cursor: not-allowed; }
+        .btn-cancel:disabled { opacity: 0.2; cursor: not-allowed; }
 
         .debug-console {
-            margin-top: 15px; background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 10px;
-            padding: 10px; font-family: 'JetBrains Mono', monospace; font-size: 11px; height: 100px; overflow-y: auto; color: var(--text-dim);
+            margin-top: 15px; background: rgba(0,0,0,0.5); border-radius: 12px; padding: 10px; 
+            font-family: 'JetBrains Mono', monospace; font-size: 10px; height: 100px;
+            overflow-y: auto; color: #666; border: 1px solid rgba(255,255,255,0.03);
         }
         .debug-line { border-bottom: 1px solid rgba(255,255,255,0.03); padding: 2px 0; }
-        .debug-err { color: var(--danger); }
+        .debug-err { color: var(--danger); font-weight: bold; }
         .debug-ok { color: var(--success); }
 
         .notif {
-            position: fixed; bottom: 30px; right: 30px; padding: 15px 25px; border-radius: 12px;
+            position: fixed; bottom: 30px; right: 30px; padding: 15px 30px; border-radius: 12px;
             background: var(--accent); color: #000; font-weight: 800; transform: translateY(150px);
-            transition: 0.4s; z-index: 1000;
+            transition: 0.5s; z-index: 1000; box-shadow: 0 0 30px var(--accent-glow);
         }
         .notif.show { transform: translateY(0); }
 
-        .loading-ring { width: 24px; height: 24px; border: 3px solid rgba(0, 242, 255, 0.1); border-radius: 50%; border-top-color: var(--accent); animation: spin 1s linear infinite; }
+        .loading-ring { width: 28px; height: 28px; border: 3px solid rgba(0, 242, 255, 0.1); border-radius: 50%; border-top-color: var(--accent); animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
         @media (max-width: 768px) { .main-grid { grid-template-columns: 1fr; } }
@@ -165,54 +161,54 @@
 <div class="container">
     <header>
         <div class="logo">WEBBRUTAL <span>HERO</span></div>
-        <div class="balance-card">
-            <span id="balance-val">0.00</span> <small style="color:var(--text-dim)">USD</small>
-            <div class="refresh-btn" onclick="updateBalance()">🔄</div>
+        <div class="balance-card" onclick="updateBalance()">
+            💰 <span id="balance-val">0.00</span> <small style="color:var(--text-dim)">USD</small>
+            <div class="refresh-btn">🔄</div>
         </div>
     </header>
 
     <div class="api-section">
         <input type="password" id="api-key" placeholder="Enter Hero-SMS API Key..." onchange="saveKey()">
-        <button class="btn btn-primary" onclick="updateBalance()">SAVE & CHECK</button>
+        <button class="btn btn-primary" onclick="updateBalance()" style="width: auto;">CHECK KEY</button>
     </div>
 
     <div class="main-grid">
         <div class="sidebar">
             <div class="card">
-                <h3 style="margin-bottom: 12px; font-size: 14px; color: var(--accent);">TARGET CONFIG</h3>
-                
+                <h3 style="margin-bottom: 12px; font-size: 14px; color: var(--accent);">SNIPER CONFIG</h3>
+                <label style="font-size: 11px; color: var(--text-dim); margin-bottom: 5px; display: block;">NEGARA:</label>
                 <select id="country-select">
-                    <option value="vietnam" data-id="10" data-code="84" data-max="0.2">Vietnam 🇻🇳</option>
-                    <option value="colombia" data-id="33" data-code="57" data-max="0.2">Colombia 🇨🇴</option>
-                    <option value="philipina" data-id="3" data-code="63" data-max="0.2">Philipina 🇵🇭</option>
-                    <option value="mexico" data-id="54" data-code="52" data-max="1.6" selected>Mexico 🇲🇽 (HOT)</option>
-                    <option value="brazil" data-id="73" data-code="55" data-max="1.5">Brazil 🇧🇷</option>
+                    <option value="vietnam" data-id="10" data-code="84">Vietnam 🇻🇳</option>
+                    <option value="colombia" data-id="33" data-code="57">Colombia 🇨🇴</option>
+                    <option value="philipina" data-id="3" data-code="63">Philipina 🇵🇭</option>
+                    <option value="mexico" data-id="54" data-code="52" selected>Mexico 🇲🇽 (HOT)</option>
+                    <option value="brazil" data-id="73" data-code="55">Brazil 🇧🇷</option>
                 </select>
 
-                <label style="font-size: 11px; color: var(--text-dim); margin-bottom: 5px; display: block;">SERVICE CODE (WA=wa):</label>
-                <input type="text" id="service-code" value="wa" style="width: 100%; margin-bottom: 15px; font-size: 12px; padding: 10px;">
+                <label style="font-size: 11px; color: var(--text-dim); margin-top: 10px; margin-bottom: 5px; display: block;">SERVICE (WA=wa):</label>
+                <input type="text" id="service-code" value="wa" style="font-size: 12px; padding: 10px; margin-bottom: 10px;">
 
-                <label style="font-size: 11px; color: var(--text-dim); margin-bottom: 5px; display: block;">MAX PRICE ($):</label>
-                <input type="number" id="max-price" value="1.6" step="0.01" style="width: 100%; margin-bottom: 15px;">
+                <label style="font-size: 11px; color: var(--text-dim); margin-bottom: 5px; display: block;">MAX PRICE ($): <span style="color:var(--danger)"> (Kosongkan jika BAD_SERVICE)</span></label>
+                <input type="number" id="max-price" value="1.6" step="0.01" style="font-size: 12px; padding: 10px; margin-bottom: 15px;">
                 
-                <button id="start-btn" class="btn btn-primary" style="width: 100%; height: 55px;" onclick="toggleAutoBuy()">🚀 START BRUTAL WAR</button>
+                <button id="start-btn" class="btn btn-primary" style="height: 60px; font-size: 18px;" onclick="toggleAutoBuy()">🚀 START WAR</button>
                 
-                <div class="stats-box" id="stats-ui" style="display: none; margin-top: 15px;">
+                <div class="stats-box" id="stats-ui" style="display: none;">
                     <p>ATTEMPTS: <span id="stat-att">0</span></p>
                     <p>FOUND: <span id="stat-found">0</span></p>
                     <p>SPEED: <span id="stat-speed">0.0</span>/s</p>
                 </div>
 
                 <div class="debug-console" id="debug-log">
-                    <div class="debug-line">System Ready.</div>
+                    <div class="debug-line">READY TO SNIPE...</div>
                 </div>
             </div>
-            <button class="btn" style="background: rgba(255,255,255,0.05); color: #fff; width: 100%;" onclick="copyAll()">📋 COPY ALL NUMBERS</button>
+            <button class="btn" style="background: rgba(255,255,255,0.05); color: #fff;" onclick="copyAll()">📋 COPY ACTIVE NUMBERS</button>
         </div>
 
         <div class="content">
             <div class="orders-container" id="orders-list">
-                <div style="text-align: center; color: var(--text-dim); margin-top: 80px;">READY FOR SNIPING 🇲🇽</div>
+                <div style="text-align: center; color: var(--text-dim); margin-top: 100px; font-weight: 600;">LIST NOMOR AKAN MUNCUL DI SINI 🇲🇽</div>
             </div>
         </div>
     </div>
@@ -232,7 +228,7 @@
         const log = document.getElementById('debug-log');
         const line = document.createElement('div');
         line.className = 'debug-line ' + (type === 'ok' ? 'debug-ok' : type === 'err' ? 'debug-err' : '');
-        line.innerText = `[${new Date().toLocaleTimeString()}] ${msg}`;
+        line.innerText = `[${new Date().toLocaleTimeString().split(' ')[0]}] ${msg}`;
         log.prepend(line);
         if (log.children.length > 50) log.lastChild.remove();
     }
@@ -257,17 +253,16 @@
         if (res && res.includes('ACCESS_BALANCE')) {
             const b = res.split(':')[1];
             document.getElementById('balance-val').innerText = parseFloat(b).toFixed(2);
-            showNotif('Balance Refreshed: $' + b);
+            showNotif('BALANCE SYNCED: $' + b);
             addDebug('Balance synced: $' + b, 'ok');
         } else {
-            addDebug('Balance check failed: ' + res, 'err');
+            addDebug('Failed: ' + res, 'err');
         }
     }
 
     function showNotif(txt) {
         const n = document.getElementById('notif');
-        n.innerText = txt;
-        n.classList.add('show');
+        n.innerText = txt; n.classList.add('show');
         setTimeout(() => n.classList.remove('show'), 2000);
     }
 
@@ -278,16 +273,16 @@
         const statsUi = document.getElementById('stats-ui');
 
         if (isRunning) {
-            btn.innerText = '🛑 STOP BRUTAL WAR';
+            btn.innerText = '🛑 STOP SNIPING';
             btn.className = 'btn btn-stop';
             statsUi.style.display = 'block';
             resetStats();
             startBrutalLoop();
-            addDebug('War Started...', 'ok');
+            addDebug('WARFIGHT STARTED!', 'ok');
         } else {
-            btn.innerText = '🚀 START BRUTAL WAR';
+            btn.innerText = '🚀 START WAR';
             btn.className = 'btn btn-primary';
-            addDebug('Stopped.');
+            addDebug('War Stopped.');
         }
     }
 
@@ -306,33 +301,30 @@
     function startBrutalLoop() {
         const countrySelect = document.getElementById('country-select');
         const countryId = countrySelect.options[countrySelect.selectedIndex].getAttribute('data-id');
-        const maxPrice = document.getElementById('max-price').value;
         const srv = document.getElementById('service-code').value.trim();
+        const mP = document.getElementById('max-price').value.trim();
 
         const loop = setInterval(async () => {
             if (!isRunning) { clearInterval(loop); return; }
             stats.att++;
             if (stats.att % 20 === 0) updateStatsUi();
 
-            // REVERT: Back to service code provided in input (default 'wa')
-            // OMITTED: operator=any for now to see if it causes issues
-            const res = await reqApi('getNumber', { 
-                service: srv, 
-                country: countryId, 
-                maxPrice: maxPrice
-            });
+            // SMART PARAMS: Only send maxPrice if not empty
+            let p = { service: srv, country: countryId };
+            if (mP) p.maxPrice = mP;
+
+            const res = await reqApi('getNumber', p);
 
             if (res && res.includes('ACCESS_NUMBER')) {
                 const [_, id, num] = res.split(':');
                 stats.found++;
-                addOrder(id, num, maxPrice);
+                addOrder(id, num, mP || "Auto");
                 updateStatsUi();
-                addDebug('SUCCESS: ' + num, 'ok');
+                updateBalance();
+                addDebug('GOT IT: ' + num, 'ok');
                 new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3').play().catch(()=>{});
             } else if (res && res.includes('NO_BALANCE')) {
-                isRunning = false;
-                toggleAutoBuy();
-                alert('SALDO HABIS!');
+                isRunning = false; toggleAutoBuy(); alert('SALDO HABIS!');
             } else if (res && !res.includes('NO_NUMBERS')) {
                 addDebug('API: ' + res, (res.includes('BAD') ? 'err' : ''));
             }
@@ -352,49 +344,61 @@
             <div class="order-item">
                 <div class="order-info">
                     <div class="order-num" onclick="copyText('${o.number}')">+${o.number}</div>
-                    <div class="order-meta">ID: ${o.id} | $${o.price} | <span class="timer-val" id="timer-${o.id}">20:00</span></div>
+                    <div class="order-meta">
+                        ID: ${o.id} | $${o.price} | <span class="timer-val" id="timer-${o.id}">20:00</span>
+                    </div>
                 </div>
                 <div class="order-status">
                     ${o.otp ? `<div class="otp-badge" onclick="copyText('${o.otp}')">${o.otp}</div>` : 
                       o.status === 'waiting' ? `<div class="loading-ring"></div>` : 
-                      `<span style="color:var(--text-dim);font-weight:800">${o.status.toUpperCase()}</span>`}
+                      `<span style="color:var(--text-dim);font-weight:950">${o.status.toUpperCase()}</span>`}
                     ${o.status === 'waiting' ? `<button class="btn-cancel" id="btn-can-${o.id}" onclick="cancelOrder('${o.id}')" disabled>WAITING (2m)</button>` : ''}
                 </div>
             </div>
         `).join('');
     }
 
+    // MAIN TICK (Fix: Independent from buy loop)
     setInterval(async () => {
         const now = Date.now();
         const waiting = orders.filter(o => o.status === 'waiting');
+        
         for (const o of waiting) {
-            const el = Math.floor((now - o.time) / 1000);
-            const rem = 1200 - el;
-            const tEl = document.getElementById(`timer-${o.id}`);
-            if (tEl) {
-                if (rem <= 0) tEl.innerText = "EXPIRED";
-                else tEl.innerText = `${Math.floor(rem/60)}:${(rem%60).toString().padStart(2,'0')}`;
-            }
-            const cBtn = document.getElementById(`btn-can-${o.id}`);
-            if (cBtn && el >= 120) {
-                cBtn.disabled = false;
-                cBtn.innerText = "✕ CANCEL";
-                cBtn.style.background = "rgba(255, 77, 77, 0.2)";
-            } else if (cBtn) {
-                cBtn.innerText = `WAIT (${120 - el}s)`;
+            // Timer Calculation
+            const elapsed = Math.floor((now - o.time) / 1000);
+            const remain = 1200 - elapsed;
+            
+            const timerEl = document.getElementById(`timer-${o.id}`);
+            if (timerEl) {
+                if (remain <= 0) timerEl.innerText = "EXPIRED";
+                else timerEl.innerText = `${Math.floor(remain/60)}:${(remain%60).toString().padStart(2,'0')}`;
             }
 
+            // Cancel Button Logic
+            const cancelBtn = document.getElementById(`btn-can-${o.id}`);
+            if (cancelBtn) {
+                if (elapsed >= 120) {
+                    cancelBtn.disabled = false;
+                    cancelBtn.innerText = "✕ CANCEL";
+                    cancelBtn.style.background = "rgba(255, 77, 77, 0.2)";
+                    cancelBtn.style.opacity = "1";
+                } else {
+                    cancelBtn.innerText = `WAIT (${120 - elapsed}s)`;
+                }
+            }
+
+            // OTP CHECKER
             const res = await reqApi('getStatus', { id: o.id });
             if (res && res.includes('STATUS_OK')) {
                 const otp = res.split(':')[1];
                 o.status = 'done';
                 o.otp = otp;
                 renderOrders();
+                addDebug('OTP RECEIVED!', 'ok');
                 new Audio('https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3').play().catch(()=>{});
                 reqApi('setStatus', { id: o.id, status: 6 });
-                addDebug('OTP RECV: ' + otp, 'ok');
             }
-            if (rem <= 0) { o.status = 'expired'; renderOrders(); }
+            if (remain <= 0) { o.status = 'expired'; renderOrders(); }
         }
     }, 1000);
 
@@ -404,9 +408,9 @@
             const o = orders.find(x => x.id === id);
             if (o) o.status = 'cancelled';
             renderOrders();
-            showNotif('ORDER CANCELLED');
+            addDebug('Order Cancelled: ' + id);
         } else {
-            showNotif('CANCEL FAILED');
+            showNotif('API REJECTED CANCEL');
         }
     }
 
@@ -414,8 +418,9 @@
     function copyAll() {
         const t = orders.filter(o => o.status === 'waiting').map(o => o.number).join('\n');
         if (t) { navigator.clipboard.writeText(t); showNotif('ALL COPIED!'); }
+        else { showNotif('NO ACTIVE NUMBERS'); }
     }
-    setInterval(updateBalance, 60000);
+    setInterval(updateBalance, 90000); 
 </script>
 </body>
 </html>
