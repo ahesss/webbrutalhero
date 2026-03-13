@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebBrutalHero — HERO-SMS SPECIALIST</title>
+    <title>WebBrutalHero — HERO-SMS ULTRA</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -16,7 +16,7 @@
             --text-dim: #888888;
             --success: #00ffaa;
             --danger: #ff4d4d;
-            --border: rgba(255, 255, 255, 0.06);
+            --border: rgba(255, 255, 255, 0.08);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,7 +28,7 @@
             min-height: 100vh;
         }
 
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
 
         header {
             display: flex;
@@ -53,7 +53,7 @@
             cursor: pointer;
         }
         .balance-card span { color: var(--success); font-weight: 800; font-family: 'JetBrains Mono', monospace; font-size: 18px; }
-        .refresh-btn { font-size: 22px; transition: 0.3s; color: var(--accent); }
+        .refresh-btn { font-size: 20px; transition: 0.3s; color: var(--accent); }
         .refresh-btn:hover { transform: rotate(180deg); }
 
         .api-section {
@@ -75,7 +75,6 @@
             font-family: 'JetBrains Mono', monospace;
             width: 100%;
         }
-        input:focus { border-color: var(--accent); }
         
         .btn {
             padding: 14px 20px;
@@ -85,21 +84,20 @@
             font-weight: 800;
             transition: 0.3s;
             text-transform: uppercase;
-            width: 100%;
         }
         .btn-primary { background: var(--accent); color: #000; }
         .btn-stop { background: var(--danger); color: #fff; }
 
-        .main-grid { display: grid; grid-template-columns: 340px 1fr; gap: 25px; }
+        .main-grid { display: grid; grid-template-columns: 320px 1fr; gap: 25px; }
 
         .card { background: var(--panel); padding: 20px; border-radius: 20px; border: 1px solid var(--border); margin-bottom: 20px; }
 
-        .stats-box { padding: 15px; background: #000; border-radius: 12px; font-size: 13px; margin-top: 15px; }
+        .stats-box { padding: 15px; background: #000; border-radius: 12px; font-size: 14px; margin-top: 15px; }
         .stats-box p { display: flex; justify-content: space-between; margin-bottom: 8px; }
         .stats-box span { color: var(--accent); font-weight: 800; }
 
         /* VERTICAL LIST - ANTI MENYAMPING */
-        .orders-container { display: flex; flex-direction: column; gap: 15px; max-height: 80vh; overflow-y: auto; width: 100%; padding-right: 10px; }
+        .orders-container { display: flex; flex-direction: column; gap: 15px; max-height: 80vh; overflow-y: auto; width: 100%; }
         .order-item {
             background: var(--panel);
             width: 100%; 
@@ -110,23 +108,22 @@
             justify-content: space-between;
             align-items: center;
             border-left: 6px solid var(--accent);
-            animation: slideIn 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            animation: slideIn 0.3s ease-out;
         }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         .order-info { display: flex; flex-direction: column; gap: 5px; }
         .order-num { font-size: 24px; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: #fff; cursor: pointer; letter-spacing: 1px; }
         .order-meta { font-size: 13px; color: var(--text-dim); display: flex; align-items: center; gap: 10px; }
-        .timer-val { color: var(--gold); font-weight: 800; background: rgba(255,204,0,0.1); padding: 2px 8px; border-radius: 5px; }
+        .timer-val { color: var(--gold); font-weight: 800; }
 
         .order-status { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
 
         .otp-badge {
             background: var(--success); color: #000; padding: 10px 25px; border-radius: 12px;
             font-weight: 950; font-family: 'JetBrains Mono', monospace; font-size: 26px;
-            box-shadow: 0 0 20px var(--success); cursor: pointer; animation: flash 1s infinite alternate;
+            box-shadow: 0 0 20px var(--success); cursor: pointer;
         }
-        @keyframes flash { from { opacity: 1; } to { opacity: 0.7; } }
 
         .btn-cancel {
             background: rgba(255, 77, 77, 0.1); color: var(--danger); border: 1px solid var(--danger);
@@ -137,16 +134,16 @@
         .debug-console {
             margin-top: 15px; background: rgba(0,0,0,0.5); border-radius: 12px; padding: 10px; 
             font-family: 'JetBrains Mono', monospace; font-size: 10px; height: 100px;
-            overflow-y: auto; color: #666; border: 1px solid rgba(255,255,255,0.03);
+            overflow-y: auto; color: #666;
         }
         .debug-line { border-bottom: 1px solid rgba(255,255,255,0.03); padding: 2px 0; }
-        .debug-err { color: var(--danger); font-weight: bold; }
+        .debug-err { color: var(--danger); }
         .debug-ok { color: var(--success); }
 
         .notif {
             position: fixed; bottom: 30px; right: 30px; padding: 15px 30px; border-radius: 12px;
             background: var(--accent); color: #000; font-weight: 800; transform: translateY(150px);
-            transition: 0.5s; z-index: 1000; box-shadow: 0 0 30px var(--accent-glow);
+            transition: 0.5s; z-index: 1000;
         }
         .notif.show { transform: translateY(0); }
 
@@ -169,14 +166,14 @@
 
     <div class="api-section">
         <input type="password" id="api-key" placeholder="Enter Hero-SMS API Key..." onchange="saveKey()">
-        <button class="btn btn-primary" onclick="updateBalance()" style="width: auto;">CHECK KEY</button>
+        <button class="btn btn-primary" onclick="updateBalance()" style="width: auto;">SYNC</button>
     </div>
 
     <div class="main-grid">
         <div class="sidebar">
             <div class="card">
                 <h3 style="margin-bottom: 12px; font-size: 14px; color: var(--accent);">SNIPER CONFIG</h3>
-                <label style="font-size: 11px; color: var(--text-dim); margin-bottom: 5px; display: block;">NEGARA:</label>
+                <label style="font-size: 11px; color: var(--text-dim); margin-bottom: 5px; display: block;">TARGET COUNTRY:</label>
                 <select id="country-select">
                     <option value="vietnam" data-id="10" data-code="84">Vietnam 🇻🇳</option>
                     <option value="colombia" data-id="33" data-code="57">Colombia 🇨🇴</option>
@@ -185,10 +182,10 @@
                     <option value="brazil" data-id="73" data-code="55">Brazil 🇧🇷</option>
                 </select>
 
-                <label style="font-size: 11px; color: var(--text-dim); margin-top: 10px; margin-bottom: 5px; display: block;">SERVICE (WA=wa):</label>
+                <label style="font-size: 11px; color: var(--text-dim); margin-top: 10px; margin-bottom: 5px; display: block;">SERVICE CODE (wa):</label>
                 <input type="text" id="service-code" value="wa" style="font-size: 12px; padding: 10px; margin-bottom: 10px;">
 
-                <label style="font-size: 11px; color: var(--text-dim); margin-bottom: 5px; display: block;">MAX PRICE ($): <span style="color:var(--danger)"> (Kosongkan jika BAD_SERVICE)</span></label>
+                <label style="font-size: 11px; color: var(--text-dim); margin-bottom: 5px; display: block;">MAX PRICE ($): <span style="color:var(--danger)">(Kosongkan jika BAD_SERVICE)</span></label>
                 <input type="number" id="max-price" value="1.6" step="0.01" style="font-size: 12px; padding: 10px; margin-bottom: 15px;">
                 
                 <button id="start-btn" class="btn btn-primary" style="height: 60px; font-size: 18px;" onclick="toggleAutoBuy()">🚀 START WAR</button>
@@ -200,15 +197,15 @@
                 </div>
 
                 <div class="debug-console" id="debug-log">
-                    <div class="debug-line">READY TO SNIPE...</div>
+                    <div class="debug-line">READY...</div>
                 </div>
             </div>
-            <button class="btn" style="background: rgba(255,255,255,0.05); color: #fff;" onclick="copyAll()">📋 COPY ACTIVE NUMBERS</button>
+            <button class="btn" style="background: rgba(255,255,255,0.05); color: #fff;" onclick="copyAll()">📋 COPY ALL NUMBERS</button>
         </div>
 
         <div class="content">
             <div class="orders-container" id="orders-list">
-                <div style="text-align: center; color: var(--text-dim); margin-top: 100px; font-weight: 600;">LIST NOMOR AKAN MUNCUL DI SINI 🇲🇽</div>
+                <div style="text-align: center; color: var(--text-dim); margin-top: 100px;">BELUM ADA NOMOR 🇲🇽</div>
             </div>
         </div>
     </div>
@@ -253,10 +250,8 @@
         if (res && res.includes('ACCESS_BALANCE')) {
             const b = res.split(':')[1];
             document.getElementById('balance-val').innerText = parseFloat(b).toFixed(2);
-            showNotif('BALANCE SYNCED: $' + b);
-            addDebug('Balance synced: $' + b, 'ok');
-        } else {
-            addDebug('Failed: ' + res, 'err');
+            showNotif('BALANCE SYNCED');
+            addDebug('Balance: $' + b, 'ok');
         }
     }
 
@@ -278,11 +273,11 @@
             statsUi.style.display = 'block';
             resetStats();
             startBrutalLoop();
-            addDebug('WARFIGHT STARTED!', 'ok');
+            addDebug('STARTING BRUTAL WAR...', 'ok');
         } else {
             btn.innerText = '🚀 START WAR';
             btn.className = 'btn btn-primary';
-            addDebug('War Stopped.');
+            addDebug('STOPPED.');
         }
     }
 
@@ -298,18 +293,16 @@
         document.getElementById('stat-speed').innerText = (stats.att / Math.max(el, 1)).toFixed(1);
     }
 
-    function startBrutalLoop() {
+    async function startBrutalLoop() {
         const countrySelect = document.getElementById('country-select');
         const countryId = countrySelect.options[countrySelect.selectedIndex].getAttribute('data-id');
         const srv = document.getElementById('service-code').value.trim();
         const mP = document.getElementById('max-price').value.trim();
 
-        const loop = setInterval(async () => {
-            if (!isRunning) { clearInterval(loop); return; }
+        while (isRunning) {
             stats.att++;
-            if (stats.att % 20 === 0) updateStatsUi();
+            if (stats.att % 10 === 0) updateStatsUi();
 
-            // SMART PARAMS: Only send maxPrice if not empty
             let p = { service: srv, country: countryId };
             if (mP) p.maxPrice = mP;
 
@@ -321,14 +314,17 @@
                 addOrder(id, num, mP || "Auto");
                 updateStatsUi();
                 updateBalance();
-                addDebug('GOT IT: ' + num, 'ok');
+                addDebug('SUCCESS: ' + num, 'ok');
                 new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3').play().catch(()=>{});
             } else if (res && res.includes('NO_BALANCE')) {
-                isRunning = false; toggleAutoBuy(); alert('SALDO HABIS!');
+                isRunning = false; toggleAutoBuy(); alert('SALDO HABIS!'); break;
             } else if (res && !res.includes('NO_NUMBERS')) {
-                addDebug('API: ' + res, (res.includes('BAD') ? 'err' : ''));
+                addDebug('API REJECTED: ' + res, 'err');
+                await new Promise(r => setTimeout(r, 500)); // Delay if error
             }
-        }, 5); 
+
+            await new Promise(r => setTimeout(r, 5));
+        }
     }
 
     function addOrder(id, num, price) {
@@ -341,7 +337,7 @@
         const list = document.getElementById('orders-list');
         if (orders.length === 0) return;
         list.innerHTML = orders.map(o => `
-            <div class="order-item">
+            <div class="order-item" id="card-${o.id}">
                 <div class="order-info">
                     <div class="order-num" onclick="copyText('${o.number}')">+${o.number}</div>
                     <div class="order-meta">
@@ -351,43 +347,42 @@
                 <div class="order-status">
                     ${o.otp ? `<div class="otp-badge" onclick="copyText('${o.otp}')">${o.otp}</div>` : 
                       o.status === 'waiting' ? `<div class="loading-ring"></div>` : 
-                      `<span style="color:var(--text-dim);font-weight:950">${o.status.toUpperCase()}</span>`}
-                    ${o.status === 'waiting' ? `<button class="btn-cancel" id="btn-can-${o.id}" onclick="cancelOrder('${o.id}')" disabled>WAITING (2m)</button>` : ''}
+                      `<span style="color:var(--text-dim);font-weight:900">${o.status.toUpperCase()}</span>`}
+                    ${o.status === 'waiting' ? `<button class="btn-cancel" id="btn-can-${o.id}" onclick="cancelOrder('${o.id}')" disabled>WAITING (120s)</button>` : ''}
                 </div>
             </div>
         `).join('');
     }
 
-    // MAIN TICK (Fix: Independent from buy loop)
+    // INDEPENDENT TICK FOR UI (FIXED TIMER & CANCEL)
     setInterval(async () => {
         const now = Date.now();
         const waiting = orders.filter(o => o.status === 'waiting');
         
         for (const o of waiting) {
-            // Timer Calculation
             const elapsed = Math.floor((now - o.time) / 1000);
             const remain = 1200 - elapsed;
             
+            // UI Update Timer
             const timerEl = document.getElementById(`timer-${o.id}`);
             if (timerEl) {
                 if (remain <= 0) timerEl.innerText = "EXPIRED";
                 else timerEl.innerText = `${Math.floor(remain/60)}:${(remain%60).toString().padStart(2,'0')}`;
             }
 
-            // Cancel Button Logic
+            // UI Update Cancel Button
             const cancelBtn = document.getElementById(`btn-can-${o.id}`);
             if (cancelBtn) {
                 if (elapsed >= 120) {
                     cancelBtn.disabled = false;
                     cancelBtn.innerText = "✕ CANCEL";
                     cancelBtn.style.background = "rgba(255, 77, 77, 0.2)";
-                    cancelBtn.style.opacity = "1";
                 } else {
                     cancelBtn.innerText = `WAIT (${120 - elapsed}s)`;
                 }
             }
 
-            // OTP CHECKER
+            // Check OTP
             const res = await reqApi('getStatus', { id: o.id });
             if (res && res.includes('STATUS_OK')) {
                 const otp = res.split(':')[1];
@@ -408,9 +403,9 @@
             const o = orders.find(x => x.id === id);
             if (o) o.status = 'cancelled';
             renderOrders();
-            addDebug('Order Cancelled: ' + id);
+            addDebug('Cancelled ID: ' + id, 'ok');
         } else {
-            showNotif('API REJECTED CANCEL');
+            addDebug('API Rejected Cancel: ' + res, 'err');
         }
     }
 
@@ -418,9 +413,8 @@
     function copyAll() {
         const t = orders.filter(o => o.status === 'waiting').map(o => o.number).join('\n');
         if (t) { navigator.clipboard.writeText(t); showNotif('ALL COPIED!'); }
-        else { showNotif('NO ACTIVE NUMBERS'); }
     }
-    setInterval(updateBalance, 90000); 
+    setInterval(updateBalance, 60000);
 </script>
 </body>
 </html>
