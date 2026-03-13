@@ -16,7 +16,6 @@
             --text-dim: #888888;
             --success: #00ffaa;
             --danger: #ff4d4d;
-            --glass: rgba(255, 255, 255, 0.02);
             --border: rgba(255, 255, 255, 0.06);
         }
 
@@ -25,10 +24,7 @@
             background-color: var(--bg);
             color: var(--text);
             font-family: 'Outfit', sans-serif;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 0% 0%, #001a1a 0%, transparent 40%),
-                radial-gradient(circle at 100% 100%, #1a001a 0%, transparent 40%);
+            background-image: radial-gradient(circle at 0% 0%, #001a1a 0%, transparent 40%);
             min-height: 100vh;
         }
 
@@ -41,25 +37,24 @@
             padding: 20px 0;
             border-bottom: 2px solid var(--accent);
             margin-bottom: 30px;
-            box-shadow: 0 10px 20px -10px var(--accent-glow);
         }
 
-        .logo { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; color: #fff; text-transform: uppercase; }
+        .logo { font-size: 26px; font-weight: 800; text-transform: uppercase; color: #fff; }
         .logo span { color: var(--accent); }
 
         .balance-card {
-            background: var(--glass);
+            background: rgba(0, 242, 255, 0.05);
             padding: 10px 20px;
             border-radius: 12px;
             border: 1px solid var(--accent);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
             cursor: pointer;
-            transition: 0.3s;
-            box-shadow: inset 0 0 10px var(--accent-glow);
         }
         .balance-card span { color: var(--success); font-weight: 800; font-family: 'JetBrains Mono', monospace; font-size: 18px; }
+        .refresh-btn { font-size: 20px; transition: 0.3s; }
+        .refresh-btn:hover { transform: rotate(180deg); }
 
         .api-section {
             background: var(--panel);
@@ -69,7 +64,6 @@
             margin-bottom: 25px;
             display: flex;
             gap: 12px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
         input {
             flex: 1;
@@ -80,47 +74,28 @@
             color: #fff;
             outline: none;
             font-family: 'JetBrains Mono', monospace;
-            transition: 0.3s;
-            font-size: 15px;
         }
-        input:focus { border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
         
         .btn {
-            padding: 14px 30px;
+            padding: 14px 20px;
             border-radius: 12px;
             border: none;
             cursor: pointer;
             font-weight: 800;
             transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
         .btn-primary { background: var(--accent); color: #000; }
-        .btn-primary:hover { transform: scale(1.02); box-shadow: 0 0 25px var(--accent-glow); }
         .btn-stop { background: var(--danger); color: #fff; }
 
-        .main-grid {
-            display: grid;
-            grid-template-columns: 340px 1fr;
-            gap: 25px;
-        }
-
-        .controls {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
+        .main-grid { display: grid; grid-template-columns: 320px 1fr; gap: 25px; }
 
         .card {
             background: var(--panel);
-            padding: 25px;
-            border-radius: 22px;
+            padding: 20px;
+            border-radius: 20px;
             border: 1px solid var(--border);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            margin-bottom: 20px;
         }
 
         select {
@@ -132,42 +107,48 @@
             color: #fff;
             margin-bottom: 15px;
             outline: none;
-            font-family: 'Outfit', sans-serif;
         }
 
         .stats-box {
-            margin-top: 10px;
-            padding: 20px;
+            padding: 15px;
             background: #000;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            font-size: 15px;
+            border-radius: 12px;
+            font-size: 14px;
         }
-        .stats-box p { display: flex; justify-content: space-between; margin-bottom: 10px; }
-        .stats-box span { color: var(--accent); font-weight: 800; font-family: 'JetBrains Mono', monospace; }
+        .stats-box p { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .stats-box span { color: var(--accent); font-weight: 800; }
 
+        /* LIST NUMBER VERTICAL - GAK MENYAMPING */
         .orders-container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            max-height: 75vh;
+            gap: 12px;
+            max-height: 80vh;
             overflow-y: auto;
-            padding-right: 8px;
+            width: 100%;
         }
+
         .order-item {
             background: var(--panel);
-            padding: 20px;
-            border-radius: 18px;
+            width: 100%; /* Full width box */
+            padding: 18px 25px;
+            border-radius: 16px;
             border: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            animation: slideIn 0.3s ease-out;
             border-left: 5px solid var(--accent);
+            animation: slideIn 0.3s ease-out;
         }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .order-num { font-size: 22px; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: #fff; cursor: pointer; }
+        .order-info { display: flex; flex-direction: column; gap: 4px; }
+        .order-num { font-size: 22px; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: #fff; cursor: pointer; letter-spacing: 1px; }
+        .order-meta { font-size: 12px; color: var(--text-dim); }
+        .timer-val { color: var(--gold); font-size: 13px; font-weight: 600; }
+
+        .order-status { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+
         .otp-badge {
             background: var(--success);
             color: #000;
@@ -176,38 +157,38 @@
             font-weight: 900;
             font-family: 'JetBrains Mono', monospace;
             font-size: 24px;
+            box-shadow: 0 0 15px var(--success);
             cursor: pointer;
-            animation: pulse 1s infinite;
         }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0, 255, 170, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(0, 255, 170, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 255, 170, 0); } }
 
         .btn-cancel {
             background: rgba(255, 77, 77, 0.1);
             color: var(--danger);
             border: 1px solid var(--danger);
-            padding: 6px 12px;
+            padding: 6px 14px;
             font-size: 11px;
             border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
         }
+        .btn-cancel:disabled { opacity: 0.3; cursor: not-allowed; }
 
         .notif {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            padding: 15px 30px;
+            padding: 15px 25px;
             border-radius: 12px;
             background: var(--accent);
             color: #000;
             font-weight: 800;
             transform: translateY(150px);
-            transition: 0.3s;
+            transition: 0.4s;
             z-index: 1000;
         }
         .notif.show { transform: translateY(0); }
 
-        .loading-ring { width: 24px; height: 24px; border: 3px solid rgba(0, 242, 255, 0.1); border-radius: 50%; border-top-color: var(--accent); animation: spin 1s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
+        @media (max-width: 768px) { .main-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -215,22 +196,21 @@
 <div class="container">
     <header>
         <div class="logo">WEBBRUTAL <span>HERO</span></div>
-        <div class="balance-card" onclick="updateBalance()">
-            💰 <span id="balance-val">0.00</span> USD
+        <div class="balance-card" id="balance-area">
+            <span id="balance-val">0.00</span> <small style="color:var(--text-dim)">USD</small>
+            <div class="refresh-btn" onclick="updateBalance()">🔄</div>
         </div>
     </header>
 
     <div class="api-section">
-        <input type="password" id="api-key" placeholder="Masukkan API Key Hero-SMS..." onchange="saveKey()">
-        <button class="btn btn-primary" onclick="updateBalance()">ACTIVATE</button>
+        <input type="password" id="api-key" placeholder="Enter Hero-SMS API Key..." onchange="saveKey()">
+        <button class="btn btn-primary" onclick="updateBalance()">SAVE & CHECK</button>
     </div>
 
     <div class="main-grid">
-        <div class="controls">
+        <div class="sidebar">
             <div class="card">
-                <h3 style="margin-bottom: 15px; font-size: 14px; color: var(--accent);">TARGET CONFIGURATION</h3>
-                
-                <label style="font-size: 11px; color: var(--text-dim); margin-bottom: 5px; display: block;">TARGET COUNTRY:</label>
+                <h3 style="margin-bottom: 12px; font-size: 14px; color: var(--accent);">TARGET CONFIG</h3>
                 <select id="country-select">
                     <option value="vietnam" data-id="10" data-code="84" data-max="0.2">Vietnam 🇻🇳</option>
                     <option value="colombia" data-id="33" data-code="57" data-max="0.2">Colombia 🇨🇴</option>
@@ -238,25 +218,21 @@
                     <option value="mexico" data-id="54" data-code="52" data-max="1.6" selected>Mexico 🇲🇽 (HOT)</option>
                     <option value="brazil" data-id="73" data-code="55" data-max="1.5">Brazil 🇧🇷</option>
                 </select>
-
                 <label style="font-size: 11px; color: var(--text-dim); margin-bottom: 5px; display: block;">MAX PRICE ($):</label>
                 <input type="number" id="max-price" value="1.6" step="0.01" style="width: 100%; margin-bottom: 15px;">
-
-                <button id="start-btn" class="btn btn-primary" style="width: 100%; height: 60px;" onclick="toggleAutoBuy()">🚀 START BRUTAL WAR</button>
-                
-                <div class="stats-box" id="stats-ui" style="display: none;">
-                    <p>STATUS: <span id="status-text" style="color: var(--success);">ULTRA BRUTAL</span></p>
+                <button id="start-btn" class="btn btn-primary" style="width: 100%; height: 55px;" onclick="toggleAutoBuy()">🚀 START BRUTAL WAR</button>
+                <div class="stats-box" id="stats-ui" style="display: none; margin-top: 15px;">
                     <p>ATTEMPTS: <span id="stat-att">0</span></p>
                     <p>FOUND: <span id="stat-found">0</span></p>
                     <p>SPEED: <span id="stat-speed">0.0</span>/s</p>
                 </div>
             </div>
-            <button class="btn" style="background: var(--glass); margin-top: 15px; width: 100%; color: #fff;" onclick="copyAll()">📋 COPY ALL NUMBERS</button>
+            <button class="btn" style="background: rgba(255,255,255,0.05); color: #fff; width: 100%;" onclick="copyAll()">📋 COPY ALL NUMBERS</button>
         </div>
 
-        <div class="orders-section">
+        <div class="content">
             <div class="orders-container" id="orders-list">
-                <div style="text-align: center; color: var(--text-dim); margin-top: 80px;">READY FOR WAR 🚀</div>
+                <div style="text-align: center; color: var(--text-dim); margin-top: 80px;">READY FOR SNIPING 🇲🇽</div>
             </div>
         </div>
     </div>
@@ -292,7 +268,7 @@
         if (res && res.includes('ACCESS_BALANCE')) {
             const b = res.split(':')[1];
             document.getElementById('balance-val').innerText = parseFloat(b).toFixed(2);
-            showNotif('BALANCE UPDATED: $' + b);
+            showNotif('Balance Refreshed: $' + b);
         }
     }
 
@@ -304,13 +280,13 @@
     }
 
     function toggleAutoBuy() {
-        if (!apiKey) { alert('Masukkan API Key!'); return; }
+        if (!apiKey) { alert('Enter API Key!'); return; }
         isRunning = !isRunning;
         const btn = document.getElementById('start-btn');
         const statsUi = document.getElementById('stats-ui');
 
         if (isRunning) {
-            btn.innerText = '🛑 STOP ACTION';
+            btn.innerText = '🛑 STOP BRUTAL WAR';
             btn.className = 'btn btn-stop';
             statsUi.style.display = 'block';
             resetStats();
@@ -336,7 +312,6 @@
     function startBrutalLoop() {
         const countrySelect = document.getElementById('country-select');
         const countryId = countrySelect.options[countrySelect.selectedIndex].getAttribute('data-id');
-        const countryCode = countrySelect.options[countrySelect.selectedIndex].getAttribute('data-code');
         const maxPrice = document.getElementById('max-price').value;
 
         const loop = setInterval(async () => {
@@ -344,27 +319,19 @@
             stats.att++;
             if (stats.att % 20 === 0) updateStatsUi();
 
-            doBuy(countryId, maxPrice, countryCode);
+            const res = await reqApi('getNumber', { service: 'wa', country: countryId, maxPrice: maxPrice });
+            if (res && res.includes('ACCESS_NUMBER')) {
+                const [_, id, num] = res.split(':');
+                stats.found++;
+                addOrder(id, num, maxPrice);
+                updateStatsUi();
+                new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3').play().catch(()=>{});
+            }
         }, 5); 
     }
 
-    async function doBuy(cId, mP, cCode) {
-        const res = await reqApi('getNumber', { service: 'wa', country: cId, maxPrice: mP });
-        if (res && res.includes('ACCESS_NUMBER')) {
-            const [_, id, num] = res.split(':');
-            stats.found++;
-            addOrder(id, num, mP, cCode);
-            updateStatsUi();
-            playAlert();
-        } else if (res && res.includes('NO_BALANCE')) {
-            isRunning = false;
-            toggleAutoBuy();
-            alert('SALDO HABIS!');
-        }
-    }
-
-    function addOrder(id, num, price, code) {
-        const order = { id, number: num, price, status: 'waiting', otp: '', time: Date.now(), code: code };
+    function addOrder(id, num, price) {
+        const order = { id, number: num, price, status: 'waiting', otp: '', time: Date.now() };
         orders.unshift(order);
         renderOrders();
     }
@@ -376,33 +343,56 @@
             <div class="order-item">
                 <div class="order-info">
                     <div class="order-num" onclick="copyText('${o.number}')">+${o.number}</div>
-                    <div class="order-meta">CODE: ${o.code} | $${o.price} | ID: ${o.id}</div>
+                    <div class="order-meta">ID: ${o.id} | $${o.price} | <span class="timer-val" id="timer-${o.id}">20:00</span></div>
                 </div>
                 <div class="order-status">
                     ${o.otp ? `<div class="otp-badge" onclick="copyText('${o.otp}')">${o.otp}</div>` : 
                       o.status === 'waiting' ? `<div class="loading-ring"></div>` : 
-                      `<span>${o.status.toUpperCase()}</span>`}
-                    ${o.status === 'waiting' ? `<button class="btn-cancel" onclick="cancelOrder('${o.id}')">CANCEL</button>` : ''}
+                      `<span style="color:var(--text-dim);font-weight:800">${o.status.toUpperCase()}</span>`}
+                    ${o.status === 'waiting' ? `<button class="btn-cancel" id="btn-can-${o.id}" onclick="cancelOrder('${o.id}')" disabled>WAITING (2m)</button>` : ''}
                 </div>
             </div>
         `).join('');
     }
 
+    // TIMER & OTP WATCHER (Fix: Timer & Cancel Button)
     setInterval(async () => {
+        const now = Date.now();
         const waiting = orders.filter(o => o.status === 'waiting');
+        
         for (const o of waiting) {
+            // Update Timer
+            const el = Math.floor((now - o.time) / 1000);
+            const rem = 1200 - el;
+            const tEl = document.getElementById(`timer-${o.id}`);
+            if (tEl) {
+                if (rem <= 0) tEl.innerText = "EXPIRED";
+                else tEl.innerText = `${Math.floor(rem/60)}:${(rem%60).toString().padStart(2,'0')}`;
+            }
+
+            // Enable Cancel button after 2 mins (120s)
+            const cBtn = document.getElementById(`btn-can-${o.id}`);
+            if (cBtn && el >= 120) {
+                cBtn.disabled = false;
+                cBtn.innerText = "✕ CANCEL";
+                cBtn.style.background = "rgba(255, 77, 77, 0.2)";
+            } else if (cBtn) {
+                cBtn.innerText = `WAIT (${120 - el}s)`;
+            }
+
+            // Check OTP
             const res = await reqApi('getStatus', { id: o.id });
             if (res && res.includes('STATUS_OK')) {
                 const otp = res.split(':')[1];
                 o.status = 'done';
                 o.otp = otp;
                 renderOrders();
-                playAlert();
+                new Audio('https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3').play().catch(()=>{});
                 reqApi('setStatus', { id: o.id, status: 6 });
             }
-            if ((Date.now() - o.time) > 1200000) { o.status = 'expired'; renderOrders(); }
+            if (rem <= 0) { o.status = 'expired'; renderOrders(); }
         }
-    }, 4000);
+    }, 1000);
 
     async function cancelOrder(id) {
         const res = await reqApi('setStatus', { id, status: 8 });
@@ -410,6 +400,9 @@
             const o = orders.find(x => x.id === id);
             if (o) o.status = 'cancelled';
             renderOrders();
+            showNotif('ORDER CANCELLED');
+        } else {
+            showNotif('CANCEL FAILED');
         }
     }
 
@@ -418,8 +411,7 @@
         const t = orders.filter(o => o.status === 'waiting').map(o => o.number).join('\n');
         if (t) { navigator.clipboard.writeText(t); showNotif('ALL COPIED!'); }
     }
-
-    function playAlert() { new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3').play().catch(()=>{}); }
+    setInterval(updateBalance, 60000);
 </script>
 </body>
 </html>
