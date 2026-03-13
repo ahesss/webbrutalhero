@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebBrutalHero — HERO-SMS MEXICO SPECIALIST</title>
+    <title>WebBrutalHero — HERO-SMS ULTRA BRUTAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -109,6 +109,12 @@
             gap: 25px;
         }
 
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
         .card {
             background: var(--panel);
             padding: 25px;
@@ -117,18 +123,20 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
-        .target-info {
-            background: rgba(0, 242, 255, 0.05);
-            border: 1px solid var(--accent);
-            padding: 20px;
-            border-radius: 16px;
-            text-align: center;
-            margin-bottom: 20px;
+        select {
+            width: 100%;
+            background: #000;
+            border: 1px solid var(--border);
+            padding: 12px;
+            border-radius: 10px;
+            color: #fff;
+            margin-bottom: 15px;
+            outline: none;
+            font-family: 'Outfit', sans-serif;
         }
-        .target-info h2 { font-size: 32px; margin-bottom: 5px; }
 
         .stats-box {
-            margin-top: 20px;
+            margin-top: 10px;
             padding: 20px;
             background: #000;
             border-radius: 16px;
@@ -220,12 +228,22 @@
     <div class="main-grid">
         <div class="controls">
             <div class="card">
-                <div class="target-info">
-                    <p>TARGET COUNTRY</p>
-                    <h2>MEXICO 🇲🇽</h2>
-                    <p style="color: var(--gold); margin-top: 5px;">MAX PRICE: $1.60</p>
-                </div>
+                <h3 style="margin-bottom: 15px; font-size: 14px; color: var(--accent);">TARGET CONFIGURATION</h3>
+                
+                <label style="font-size: 11px; color: var(--text-dim); margin-bottom: 5px; display: block;">TARGET COUNTRY:</label>
+                <select id="country-select">
+                    <option value="vietnam" data-id="10" data-code="84" data-max="0.2">Vietnam 🇻🇳</option>
+                    <option value="colombia" data-id="33" data-code="57" data-max="0.2">Colombia 🇨🇴</option>
+                    <option value="philipina" data-id="3" data-code="63" data-max="0.2">Philipina 🇵🇭</option>
+                    <option value="mexico" data-id="54" data-code="52" data-max="1.6" selected>Mexico 🇲🇽 (HOT)</option>
+                    <option value="brazil" data-id="73" data-code="55" data-max="1.5">Brazil 🇧🇷</option>
+                </select>
+
+                <label style="font-size: 11px; color: var(--text-dim); margin-bottom: 5px; display: block;">MAX PRICE ($):</label>
+                <input type="number" id="max-price" value="1.6" step="0.01" style="width: 100%; margin-bottom: 15px;">
+
                 <button id="start-btn" class="btn btn-primary" style="width: 100%; height: 60px;" onclick="toggleAutoBuy()">🚀 START BRUTAL WAR</button>
+                
                 <div class="stats-box" id="stats-ui" style="display: none;">
                     <p>STATUS: <span id="status-text" style="color: var(--success);">ULTRA BRUTAL</span></p>
                     <p>ATTEMPTS: <span id="stat-att">0</span></p>
@@ -233,12 +251,12 @@
                     <p>SPEED: <span id="stat-speed">0.0</span>/s</p>
                 </div>
             </div>
-            <button class="btn" style="background: var(--glass); margin-top: 20px; width: 100%; color: #fff;" onclick="copyAll()">📋 COPY ALL</button>
+            <button class="btn" style="background: var(--glass); margin-top: 15px; width: 100%; color: #fff;" onclick="copyAll()">📋 COPY ALL NUMBERS</button>
         </div>
 
         <div class="orders-section">
             <div class="orders-container" id="orders-list">
-                <div style="text-align: center; color: var(--text-dim); margin-top: 80px;">READY FOR WAR 🇲🇽</div>
+                <div style="text-align: center; color: var(--text-dim); margin-top: 80px;">READY FOR WAR 🚀</div>
             </div>
         </div>
     </div>
@@ -273,7 +291,7 @@
         const res = await reqApi('getBalance');
         if (res && res.includes('ACCESS_BALANCE')) {
             const b = res.split(':')[1];
-            document.getElementById('balance-val').innerText = b;
+            document.getElementById('balance-val').innerText = parseFloat(b).toFixed(2);
             showNotif('BALANCE UPDATED: $' + b);
         }
     }
@@ -316,22 +334,26 @@
     }
 
     function startBrutalLoop() {
-        // REVERT KE SETINTERVAL (ULTRA FAST FIRE & FORGET)
+        const countrySelect = document.getElementById('country-select');
+        const countryId = countrySelect.options[countrySelect.selectedIndex].getAttribute('data-id');
+        const countryCode = countrySelect.options[countrySelect.selectedIndex].getAttribute('data-code');
+        const maxPrice = document.getElementById('max-price').value;
+
         const loop = setInterval(async () => {
             if (!isRunning) { clearInterval(loop); return; }
             stats.att++;
             if (stats.att % 20 === 0) updateStatsUi();
 
-            doBuy();
+            doBuy(countryId, maxPrice, countryCode);
         }, 5); 
     }
 
-    async function doBuy() {
-        const res = await reqApi('getNumber', { service: 'wa', country: '54', maxPrice: '1.6' });
+    async function doBuy(cId, mP, cCode) {
+        const res = await reqApi('getNumber', { service: 'wa', country: cId, maxPrice: mP });
         if (res && res.includes('ACCESS_NUMBER')) {
             const [_, id, num] = res.split(':');
             stats.found++;
-            addOrder(id, num);
+            addOrder(id, num, mP, cCode);
             updateStatsUi();
             playAlert();
         } else if (res && res.includes('NO_BALANCE')) {
@@ -341,8 +363,8 @@
         }
     }
 
-    function addOrder(id, num) {
-        const order = { id, number: num, status: 'waiting', otp: '', time: Date.now() };
+    function addOrder(id, num, price, code) {
+        const order = { id, number: num, price, status: 'waiting', otp: '', time: Date.now(), code: code };
         orders.unshift(order);
         renderOrders();
     }
@@ -354,7 +376,7 @@
             <div class="order-item">
                 <div class="order-info">
                     <div class="order-num" onclick="copyText('${o.number}')">+${o.number}</div>
-                    <div class="order-meta">MEXICO | $1.60 | ID: ${o.id}</div>
+                    <div class="order-meta">CODE: ${o.code} | $${o.price} | ID: ${o.id}</div>
                 </div>
                 <div class="order-status">
                     ${o.otp ? `<div class="otp-badge" onclick="copyText('${o.otp}')">${o.otp}</div>` : 
