@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebBrutalHero — HERO-SMS MEXICO ULTRA</title>
+    <title>WebBrutalHero — HERO-SMS MEXICO SPECIALIST</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -32,7 +32,7 @@
             min-height: 100vh;
         }
 
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
 
         header {
             display: flex;
@@ -61,23 +61,18 @@
         }
         .balance-card span { color: var(--success); font-weight: 800; font-family: 'JetBrains Mono', monospace; font-size: 18px; }
 
-        .main-grid {
-            display: grid;
-            grid-template-columns: 350px 1fr;
-            gap: 25px;
-        }
-
-        .card {
+        .api-section {
             background: var(--panel);
-            padding: 20px;
-            border-radius: 22px;
+            padding: 24px;
+            border-radius: 20px;
             border: 1px solid var(--border);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            gap: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
-
         input {
-            width: 100%;
+            flex: 1;
             background: #000;
             border: 1px solid var(--border);
             padding: 14px 20px;
@@ -86,11 +81,10 @@
             outline: none;
             font-family: 'JetBrains Mono', monospace;
             transition: 0.3s;
-            font-size: 14px;
-            margin-bottom: 15px;
+            font-size: 15px;
         }
         input:focus { border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
-
+        
         .btn {
             padding: 14px 30px;
             border-radius: 12px;
@@ -104,11 +98,24 @@
             gap: 10px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            width: 100%;
         }
         .btn-primary { background: var(--accent); color: #000; }
         .btn-primary:hover { transform: scale(1.02); box-shadow: 0 0 25px var(--accent-glow); }
         .btn-stop { background: var(--danger); color: #fff; }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--panel);
+            padding: 25px;
+            border-radius: 22px;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
 
         .target-info {
             background: rgba(0, 242, 255, 0.05);
@@ -119,92 +126,78 @@
             margin-bottom: 20px;
         }
         .target-info h2 { font-size: 32px; margin-bottom: 5px; }
-        
+
         .stats-box {
-            padding: 15px;
+            margin-top: 20px;
+            padding: 20px;
             background: #000;
             border-radius: 16px;
             border: 1px solid var(--border);
-            font-size: 14px;
+            font-size: 15px;
         }
-        .stats-box p { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .stats-box p { display: flex; justify-content: space-between; margin-bottom: 10px; }
         .stats-box span { color: var(--accent); font-weight: 800; font-family: 'JetBrains Mono', monospace; }
-
-        .log-box {
-            margin-top: 15px;
-            background: rgba(0,0,0,0.5);
-            border-radius: 12px;
-            padding: 10px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            height: 80px;
-            overflow-y: auto;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .log-line { border-bottom: 1px solid rgba(255,255,255,0.03); padding: 2px 0; }
-        .log-err { color: var(--danger); }
-        .log-ok { color: var(--success); }
 
         .orders-container {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            max-height: 80vh;
+            gap: 15px;
+            max-height: 75vh;
             overflow-y: auto;
-            padding-right: 5px;
+            padding-right: 8px;
         }
-        .orders-container::-webkit-scrollbar { width: 4px; }
-        .orders-container::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
-
         .order-item {
             background: var(--panel);
-            padding: 15px 20px;
-            border-radius: 16px;
+            padding: 20px;
+            border-radius: 18px;
             border: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-left: 5px solid var(--accent);
             animation: slideIn 0.3s ease-out;
+            border-left: 5px solid var(--accent);
         }
         @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
 
-        .order-num { font-size: 20px; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: #fff; cursor: pointer; }
+        .order-num { font-size: 22px; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: #fff; cursor: pointer; }
         .otp-badge {
             background: var(--success);
             color: #000;
-            padding: 6px 18px;
-            border-radius: 8px;
+            padding: 8px 20px;
+            border-radius: 10px;
             font-weight: 900;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 20px;
-            box-shadow: 0 0 15px var(--success);
+            font-size: 24px;
             cursor: pointer;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0, 255, 170, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(0, 255, 170, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 255, 170, 0); } }
+
+        .btn-cancel {
+            background: rgba(255, 77, 77, 0.1);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+            padding: 6px 12px;
+            font-size: 11px;
+            border-radius: 8px;
         }
 
         .notif {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            padding: 15px 25px;
+            padding: 15px 30px;
             border-radius: 12px;
             background: var(--accent);
             color: #000;
             font-weight: 800;
             transform: translateY(150px);
-            transition: 0.4s;
+            transition: 0.3s;
             z-index: 1000;
         }
         .notif.show { transform: translateY(0); }
 
-        .loading-ring {
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(0, 242, 255, 0.1);
-            border-radius: 50%;
-            border-top-color: var(--accent);
-            animation: spin 0.8s linear infinite;
-        }
+        .loading-ring { width: 24px; height: 24px; border: 3px solid rgba(0, 242, 255, 0.1); border-radius: 50%; border-top-color: var(--accent); animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
     </style>
@@ -219,45 +212,33 @@
         </div>
     </header>
 
-    <div class="main-grid">
-        <div class="sidebar">
-            <div class="card">
-                <p style="font-size: 12px; color: var(--text-dim); margin-bottom: 5px;">HERO-SMS API KEY</p>
-                <input type="password" id="api-key" placeholder="Masukkan Key..." onchange="saveKey()">
-                <button class="btn btn-primary" onclick="updateBalance()" style="margin-bottom: 10px; font-size: 12px; padding: 10px;">SYNC BALANCE</button>
-            </div>
+    <div class="api-section">
+        <input type="password" id="api-key" placeholder="Masukkan API Key Hero-SMS..." onchange="saveKey()">
+        <button class="btn btn-primary" onclick="updateBalance()">ACTIVATE</button>
+    </div>
 
+    <div class="main-grid">
+        <div class="controls">
             <div class="card">
                 <div class="target-info">
-                    <p>TARGET</p>
+                    <p>TARGET COUNTRY</p>
                     <h2>MEXICO 🇲🇽</h2>
-                    <p style="color: var(--gold); margin-top: 5px;">LIMIT: $1.60</p>
+                    <p style="color: var(--gold); margin-top: 5px;">MAX PRICE: $1.60</p>
                 </div>
-                <button id="start-btn" class="btn btn-primary" style="height: 55px;" onclick="toggleAutoBuy()">🚀 START MEXICO WAR</button>
-            </div>
-
-            <div class="card">
-                <div class="stats-box">
-                    <p>STATUS: <span id="status-text">OFFLINE</span></p>
+                <button id="start-btn" class="btn btn-primary" style="width: 100%; height: 60px;" onclick="toggleAutoBuy()">🚀 START BRUTAL WAR</button>
+                <div class="stats-box" id="stats-ui" style="display: none;">
+                    <p>STATUS: <span id="status-text" style="color: var(--success);">ULTRA BRUTAL</span></p>
                     <p>ATTEMPTS: <span id="stat-att">0</span></p>
                     <p>FOUND: <span id="stat-found">0</span></p>
                     <p>SPEED: <span id="stat-speed">0.0</span>/s</p>
                 </div>
-                <div class="log-box" id="log-monitor">
-                    <div class="log-line">Waiting for action...</div>
-                </div>
             </div>
-            
-            <button class="btn" style="background: rgba(255,255,255,0.05); color: #fff; margin-top: 10px;" onclick="copyAll()">📋 COPY ALL NUMBERS</button>
+            <button class="btn" style="background: var(--glass); margin-top: 20px; width: 100%; color: #fff;" onclick="copyAll()">📋 COPY ALL</button>
         </div>
 
-        <div class="content">
+        <div class="orders-section">
             <div class="orders-container" id="orders-list">
-                <div style="text-align: center; color: var(--text-dim); margin-top: 100px;">
-                    <p style="font-size: 40px;">🇲🇽</p>
-                    <p>BELUM ADA NOMOR</p>
-                    <p style="font-size: 11px;">Keep this tab open for best performance</p>
-                </div>
+                <div style="text-align: center; color: var(--text-dim); margin-top: 80px;">READY FOR WAR 🇲🇽</div>
             </div>
         </div>
     </div>
@@ -278,31 +259,13 @@
         localStorage.setItem('webbrutalhero_key', apiKey);
     }
 
-    function addLog(msg, type='') {
-        const log = document.getElementById('log-monitor');
-        const d = new Date().toLocaleTimeString();
-        const line = document.createElement('div');
-        line.className = 'log-line ' + (type === 'err' ? 'log-err' : type === 'ok' ? 'log-ok' : '');
-        line.innerText = `[${d}] ${msg}`;
-        log.prepend(line);
-        if (log.children.length > 50) log.lastChild.remove();
-    }
-
     async function reqApi(action, extra = {}) {
         if (!apiKey) return;
         const params = new URLSearchParams({ action, api_key: apiKey, ...extra });
         try {
             const r = await fetch(`/api/proxy?${params.toString()}`);
-            const txt = await r.text();
-            // Cek jika API merespon eror
-            if (txt.includes('BAD_KEY') || txt.includes('ERROR_KEY')) {
-                addLog('WARNING: API Key Invalid/Banned!', 'err');
-            }
-            return txt.trim();
-        } catch (e) { 
-            addLog('ERR: Network Error', 'err');
-            return 'ERR_HTTP'; 
-        }
+            return await r.text();
+        } catch (e) { return 'ERR_HTTP'; }
     }
 
     async function updateBalance() {
@@ -310,11 +273,8 @@
         const res = await reqApi('getBalance');
         if (res && res.includes('ACCESS_BALANCE')) {
             const b = res.split(':')[1];
-            document.getElementById('balance-val').innerText = parseFloat(b).toFixed(2);
+            document.getElementById('balance-val').innerText = b;
             showNotif('BALANCE UPDATED: $' + b);
-            addLog('Balance synced: $' + b, 'ok');
-        } else {
-            addLog('Failed to sync balance', 'err');
         }
     }
 
@@ -329,22 +289,17 @@
         if (!apiKey) { alert('Masukkan API Key!'); return; }
         isRunning = !isRunning;
         const btn = document.getElementById('start-btn');
-        const stText = document.getElementById('status-text');
+        const statsUi = document.getElementById('stats-ui');
 
         if (isRunning) {
-            btn.innerText = '🛑 STOP MEXICO WAR';
+            btn.innerText = '🛑 STOP ACTION';
             btn.className = 'btn btn-stop';
-            stText.innerText = 'BRUTAL MODE';
-            stText.style.color = '#00ffaa';
+            statsUi.style.display = 'block';
             resetStats();
-            brutalLoop();
-            addLog('ULTRA BRUTAL STARTED', 'ok');
+            startBrutalLoop();
         } else {
-            btn.innerText = '🚀 START MEXICO WAR';
+            btn.innerText = '🚀 START BRUTAL WAR';
             btn.className = 'btn btn-primary';
-            stText.innerText = 'OFFLINE';
-            stText.style.color = '#ff4d4d';
-            addLog('WAR STOPPED');
         }
     }
 
@@ -360,37 +315,29 @@
         document.getElementById('stat-speed').innerText = (stats.att / Math.max(el, 1)).toFixed(1);
     }
 
-    // NEW STABLE ASYNC LOOP (Tidak menumpuk dan tahan banting)
-    async function brutalLoop() {
-        while (isRunning) {
+    function startBrutalLoop() {
+        // REVERT KE SETINTERVAL (ULTRA FAST FIRE & FORGET)
+        const loop = setInterval(async () => {
+            if (!isRunning) { clearInterval(loop); return; }
             stats.att++;
-            if (stats.att % 10 === 0) updateStatsUi();
+            if (stats.att % 20 === 0) updateStatsUi();
 
-            // Fire request
-            const res = await reqApi('getNumber', { service: 'wa', country: '54', maxPrice: '1.6' });
-            
-            if (res && res.includes('ACCESS_NUMBER')) {
-                const [_, id, num] = res.split(':');
-                stats.found++;
-                addOrder(id, num);
-                updateStatsUi();
-                playAlert();
-                addLog('GOT NUMBER: ' + num, 'ok');
-            } else if (res && res.includes('NO_BALANCE')) {
-                alert('SALDO HABIS!');
-                isRunning = false;
-                toggleAutoBuy();
-                break;
-            } else if (res && (res.includes('BAD_KEY') || res.includes('ERROR_KEY'))) {
-                // Jangan langsung mati, cooling down
-                addLog('Rate Limit / Key Error. Sleeping 2s...', 'err');
-                await new Promise(r => setTimeout(r, 2000));
-            } else if (res && res.includes('NO_NUMBERS')) {
-                // Normal case, just continue kencang
-            }
+            doBuy();
+        }, 5); 
+    }
 
-            // Jeda milidetik (tetap kencang tapi stabil)
-            await new Promise(r => setTimeout(r, 5));
+    async function doBuy() {
+        const res = await reqApi('getNumber', { service: 'wa', country: '54', maxPrice: '1.6' });
+        if (res && res.includes('ACCESS_NUMBER')) {
+            const [_, id, num] = res.split(':');
+            stats.found++;
+            addOrder(id, num);
+            updateStatsUi();
+            playAlert();
+        } else if (res && res.includes('NO_BALANCE')) {
+            isRunning = false;
+            toggleAutoBuy();
+            alert('SALDO HABIS!');
         }
     }
 
@@ -403,42 +350,35 @@
     function renderOrders() {
         const list = document.getElementById('orders-list');
         if (orders.length === 0) return;
-
         list.innerHTML = orders.map(o => `
             <div class="order-item">
                 <div class="order-info">
                     <div class="order-num" onclick="copyText('${o.number}')">+${o.number}</div>
-                    <div class="order-meta">ID: ${o.id} | $1.60</div>
+                    <div class="order-meta">MEXICO | $1.60 | ID: ${o.id}</div>
                 </div>
                 <div class="order-status">
                     ${o.otp ? `<div class="otp-badge" onclick="copyText('${o.otp}')">${o.otp}</div>` : 
                       o.status === 'waiting' ? `<div class="loading-ring"></div>` : 
                       `<span>${o.status.toUpperCase()}</span>`}
-                    
                     ${o.status === 'waiting' ? `<button class="btn-cancel" onclick="cancelOrder('${o.id}')">CANCEL</button>` : ''}
                 </div>
             </div>
         `).join('');
     }
 
-    // OTP MONITORING (Setiap 4 detik)
     setInterval(async () => {
         const waiting = orders.filter(o => o.status === 'waiting');
         for (const o of waiting) {
             const res = await reqApi('getStatus', { id: o.id });
             if (res && res.includes('STATUS_OK')) {
+                const otp = res.split(':')[1];
                 o.status = 'done';
-                o.otp = res.split(':')[1];
-                reqApi('setStatus', { id: o.id, status: 6 }); // Set ke Finish
+                o.otp = otp;
                 renderOrders();
-                playBeep();
-                showNotif('🎉 OTP: ' + o.otp);
-                addLog('OTP Received for ' + o.number, 'ok');
+                playAlert();
+                reqApi('setStatus', { id: o.id, status: 6 });
             }
-            if ((Date.now() - o.time) > 1200000) {
-                o.status = 'expired';
-                renderOrders();
-            }
+            if ((Date.now() - o.time) > 1200000) { o.status = 'expired'; renderOrders(); }
         }
     }, 4000);
 
@@ -448,30 +388,16 @@
             const o = orders.find(x => x.id === id);
             if (o) o.status = 'cancelled';
             renderOrders();
-            showNotif('CANCELLED');
-        } else {
-            showNotif('WAIT 2 MIN');
         }
     }
 
-    function copyText(txt) {
-        navigator.clipboard.writeText(txt);
-        showNotif('COPIED!');
-    }
-
+    function copyText(txt) { navigator.clipboard.writeText(txt); showNotif('COPIED!'); }
     function copyAll() {
-        const nums = orders.filter(o => o.status === 'waiting').map(o => o.number).join('\n');
-        if (!nums) return;
-        navigator.clipboard.writeText(nums);
-        showNotif('COPIED ALL!');
+        const t = orders.filter(o => o.status === 'waiting').map(o => o.number).join('\n');
+        if (t) { navigator.clipboard.writeText(t); showNotif('ALL COPIED!'); }
     }
 
     function playAlert() { new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3').play().catch(()=>{}); }
-    function playBeep() { new Audio('https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3').play().catch(()=>{}); }
-
-    // Keep session alive periodically
-    setInterval(updateBalance, 60000);
-
 </script>
 </body>
 </html>
